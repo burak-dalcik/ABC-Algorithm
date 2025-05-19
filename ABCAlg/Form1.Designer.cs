@@ -51,17 +51,17 @@
             // labelColony
             // 
             this.labelColony.AutoSize = true;
-            this.labelColony.Location = new System.Drawing.Point(173, 27);
+            this.labelColony.Location = new System.Drawing.Point(35, 31);
             this.labelColony.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelColony.Name = "labelColony";
-            this.labelColony.Size = new System.Drawing.Size(88, 16);
+            this.labelColony.Size = new System.Drawing.Size(91, 16);
             this.labelColony.TabIndex = 0;
-            this.labelColony.Text = "Kolon Boyutu:";
+            this.labelColony.Text = "Koloni Boyutu:";
             // 
             // labelIter
             // 
             this.labelIter.AutoSize = true;
-            this.labelIter.Location = new System.Drawing.Point(173, 64);
+            this.labelIter.Location = new System.Drawing.Point(35, 71);
             this.labelIter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelIter.Name = "labelIter";
             this.labelIter.Size = new System.Drawing.Size(133, 16);
@@ -71,7 +71,7 @@
             // labelLimit
             // 
             this.labelLimit.AutoSize = true;
-            this.labelLimit.Location = new System.Drawing.Point(173, 101);
+            this.labelLimit.Location = new System.Drawing.Point(35, 107);
             this.labelLimit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelLimit.Name = "labelLimit";
             this.labelLimit.Size = new System.Drawing.Size(37, 16);
@@ -81,7 +81,7 @@
             // labelDim
             // 
             this.labelDim.AutoSize = true;
-            this.labelDim.Location = new System.Drawing.Point(173, 138);
+            this.labelDim.Location = new System.Drawing.Point(35, 148);
             this.labelDim.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelDim.Name = "labelDim";
             this.labelDim.Size = new System.Drawing.Size(44, 16);
@@ -91,7 +91,7 @@
             // labelFunc
             // 
             this.labelFunc.AutoSize = true;
-            this.labelFunc.Location = new System.Drawing.Point(240, 176);
+            this.labelFunc.Location = new System.Drawing.Point(35, 189);
             this.labelFunc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelFunc.Name = "labelFunc";
             this.labelFunc.Size = new System.Drawing.Size(109, 16);
@@ -100,8 +100,8 @@
             // 
             // numericColony
             // 
-            this.numericColony.Location = new System.Drawing.Point(27, 21);
-            this.numericColony.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericColony.Location = new System.Drawing.Point(176, 25);
+            this.numericColony.Margin = new System.Windows.Forms.Padding(4);
             this.numericColony.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -123,8 +123,8 @@
             // 
             // numericIter
             // 
-            this.numericIter.Location = new System.Drawing.Point(27, 62);
-            this.numericIter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericIter.Location = new System.Drawing.Point(176, 71);
+            this.numericIter.Margin = new System.Windows.Forms.Padding(4);
             this.numericIter.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -146,8 +146,8 @@
             // 
             // numericLimit
             // 
-            this.numericLimit.Location = new System.Drawing.Point(27, 98);
-            this.numericLimit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericLimit.Location = new System.Drawing.Point(176, 105);
+            this.numericLimit.Margin = new System.Windows.Forms.Padding(4);
             this.numericLimit.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -169,8 +169,8 @@
             // 
             // numericDim
             // 
-            this.numericDim.Location = new System.Drawing.Point(27, 135);
-            this.numericDim.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericDim.Location = new System.Drawing.Point(176, 146);
+            this.numericDim.Margin = new System.Windows.Forms.Padding(4);
             this.numericDim.Maximum = new decimal(new int[] {
             30,
             0,
@@ -198,16 +198,16 @@
             "Sphere",
             "Rosenbrock",
             "Rastrigin"});
-            this.comboFunc.Location = new System.Drawing.Point(27, 172);
-            this.comboFunc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboFunc.Location = new System.Drawing.Point(176, 186);
+            this.comboFunc.Margin = new System.Windows.Forms.Padding(4);
             this.comboFunc.Name = "comboFunc";
             this.comboFunc.Size = new System.Drawing.Size(199, 24);
             this.comboFunc.TabIndex = 5;
             // 
             // buttonSolve
             // 
-            this.buttonSolve.Location = new System.Drawing.Point(27, 209);
-            this.buttonSolve.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSolve.Location = new System.Drawing.Point(27, 222);
+            this.buttonSolve.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSolve.Name = "buttonSolve";
             this.buttonSolve.Size = new System.Drawing.Size(133, 28);
             this.buttonSolve.TabIndex = 6;
@@ -218,7 +218,7 @@
             // 
             this.textResult.Font = new System.Drawing.Font("Consolas", 10F);
             this.textResult.Location = new System.Drawing.Point(13, 258);
-            this.textResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textResult.Margin = new System.Windows.Forms.Padding(4);
             this.textResult.Multiline = true;
             this.textResult.Name = "textResult";
             this.textResult.ReadOnly = true;
@@ -228,7 +228,7 @@
             // chartConvergence
             // 
             this.chartConvergence.Location = new System.Drawing.Point(437, 11);
-            this.chartConvergence.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chartConvergence.Margin = new System.Windows.Forms.Padding(4);
             this.chartConvergence.Name = "chartConvergence";
             this.chartConvergence.Size = new System.Drawing.Size(688, 738);
             this.chartConvergence.TabIndex = 8;
@@ -253,7 +253,7 @@
             this.Controls.Add(this.buttonSolve);
             this.Controls.Add(this.textResult);
             this.Controls.Add(this.chartConvergence);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "ABC Algoritması";
             ((System.ComponentModel.ISupportInitialize)(this.numericColony)).EndInit();

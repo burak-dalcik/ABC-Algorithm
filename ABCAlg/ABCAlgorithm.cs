@@ -49,13 +49,12 @@ namespace ABCAlg
 
         public void Solve()
         {
-            // Çözümleri ve uygunluk değerlerini tutacak diziler
             var solutions = new double[_colonySize][];
             var fitnessValues = new double[_colonySize];
             var objectiveValues = new double[_colonySize];
             var trialCounters = new int[_colonySize];
 
-            // Başlangıç popülasyonunu oluştur
+            // Başlangıç
             for (int i = 0; i < _colonySize; i++)
             {
                 solutions[i] = GenerateRandomSolution();
@@ -63,29 +62,25 @@ namespace ABCAlg
                 fitnessValues[i] = Fitness(objectiveValues[i]);
             }
 
-            // En iyi çözümü bul (amaç fonksiyonu ile)
             int bestIndex = Array.IndexOf(objectiveValues, objectiveValues.Min());
             BestSolution = solutions[bestIndex].ToArray();
             BestFitness = objectiveValues[bestIndex];
 
-            // Ana döngü
             for (int iteration = 0; iteration < _maxIterations; iteration++)
             {
-                // İşçi arı fazı
+                // İşçi arı
                 for (int i = 0; i < _colonySize; i++)
                 {
                     var newSolution = GenerateNewSolution(solutions[i], solutions);
                     double newObj = _objectiveFunction(newSolution);
                     double newFit = Fitness(newObj);
 
-                    if (newFit > fitnessValues[i]) // fitness büyükse daha iyi
+                    if (newFit > fitnessValues[i])
                     {
                         solutions[i] = newSolution;
                         objectiveValues[i] = newObj;
                         fitnessValues[i] = newFit;
                         trialCounters[i] = 0;
-
-                        // Global en iyi çözümü güncelle (amaç fonksiyonu ile)
                         if (newObj < BestFitness)
                         {
                             BestSolution = newSolution.ToArray();
@@ -98,7 +93,7 @@ namespace ABCAlg
                     }
                 }
 
-                // Gözcü arı fazı
+                // Gözcü arı
                 double[] probabilities = CalculateProbabilities(fitnessValues);
                 for (int i = 0; i < _colonySize; i++)
                 {
@@ -114,7 +109,6 @@ namespace ABCAlg
                             objectiveValues[i] = newObj;
                             fitnessValues[i] = newFit;
                             trialCounters[i] = 0;
-
                             if (newObj < BestFitness)
                             {
                                 BestSolution = newSolution.ToArray();
@@ -128,7 +122,7 @@ namespace ABCAlg
                     }
                 }
 
-                // Keşifçi arı fazı
+                // Kaşif arı
                 for (int i = 0; i < _colonySize; i++)
                 {
                     if (trialCounters[i] >= _limit)
@@ -137,7 +131,6 @@ namespace ABCAlg
                         objectiveValues[i] = _objectiveFunction(solutions[i]);
                         fitnessValues[i] = Fitness(objectiveValues[i]);
                         trialCounters[i] = 0;
-
                         if (objectiveValues[i] < BestFitness)
                         {
                             BestSolution = solutions[i].ToArray();
@@ -164,24 +157,15 @@ namespace ABCAlg
         {
             var newSolution = new double[_dimension];
             Array.Copy(currentSolution, newSolution, _dimension);
-
-            // Rastgele bir boyut seç
             int j = _random.Next(_dimension);
-            
-            // Rastgele bir çözüm seç (kendisi hariç)
             int k;
             do
             {
                 k = _random.Next(_colonySize);
             } while (allSolutions[k] == currentSolution);
-
-            // Yeni çözümü oluştur
             double phi = -1 + 2 * _random.NextDouble();
             newSolution[j] = currentSolution[j] + phi * (currentSolution[j] - allSolutions[k][j]);
-            
-            // Sınırları kontrol et
             newSolution[j] = Math.Max(_lowerBound[j], Math.Min(_upperBound[j], newSolution[j]));
-
             return newSolution;
         }
 
