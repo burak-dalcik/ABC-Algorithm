@@ -39,24 +39,34 @@ namespace ABCAlg
             ConvergenceHistory = new List<double>();
         }
 
+        private double Fitness(double fx)
+        {
+            if (fx >= 0)
+                return 1.0 / (1.0 + fx);
+            else
+                return 1.0 + Math.Abs(fx);
+        }
+
         public void Solve()
         {
             // Çözümleri ve uygunluk değerlerini tutacak diziler
             var solutions = new double[_colonySize][];
             var fitnessValues = new double[_colonySize];
+            var objectiveValues = new double[_colonySize];
             var trialCounters = new int[_colonySize];
 
             // Başlangıç popülasyonunu oluştur
             for (int i = 0; i < _colonySize; i++)
             {
                 solutions[i] = GenerateRandomSolution();
-                fitnessValues[i] = _objectiveFunction(solutions[i]);
+                objectiveValues[i] = _objectiveFunction(solutions[i]);
+                fitnessValues[i] = Fitness(objectiveValues[i]);
             }
 
-            // En iyi çözümü bul
-            int bestIndex = Array.IndexOf(fitnessValues, fitnessValues.Min());
+            // En iyi çözümü bul (amaç fonksiyonu ile)
+            int bestIndex = Array.IndexOf(objectiveValues, objectiveValues.Min());
             BestSolution = solutions[bestIndex].ToArray();
-            BestFitness = fitnessValues[bestIndex];
+            BestFitness = objectiveValues[bestIndex];
 
             // Ana döngü
             for (int iteration = 0; iteration < _maxIterations; iteration++)
@@ -65,19 +75,21 @@ namespace ABCAlg
                 for (int i = 0; i < _colonySize; i++)
                 {
                     var newSolution = GenerateNewSolution(solutions[i], solutions);
-                    var newFitness = _objectiveFunction(newSolution);
+                    double newObj = _objectiveFunction(newSolution);
+                    double newFit = Fitness(newObj);
 
-                    if (newFitness < fitnessValues[i])
+                    if (newFit > fitnessValues[i]) // fitness büyükse daha iyi
                     {
                         solutions[i] = newSolution;
-                        fitnessValues[i] = newFitness;
+                        objectiveValues[i] = newObj;
+                        fitnessValues[i] = newFit;
                         trialCounters[i] = 0;
 
-                        // Global en iyi çözümü güncelle
-                        if (newFitness < BestFitness)
+                        // Global en iyi çözümü güncelle (amaç fonksiyonu ile)
+                        if (newObj < BestFitness)
                         {
                             BestSolution = newSolution.ToArray();
-                            BestFitness = newFitness;
+                            BestFitness = newObj;
                         }
                     }
                     else
@@ -93,19 +105,20 @@ namespace ABCAlg
                     if (_random.NextDouble() < probabilities[i])
                     {
                         var newSolution = GenerateNewSolution(solutions[i], solutions);
-                        var newFitness = _objectiveFunction(newSolution);
+                        double newObj = _objectiveFunction(newSolution);
+                        double newFit = Fitness(newObj);
 
-                        if (newFitness < fitnessValues[i])
+                        if (newFit > fitnessValues[i])
                         {
                             solutions[i] = newSolution;
-                            fitnessValues[i] = newFitness;
+                            objectiveValues[i] = newObj;
+                            fitnessValues[i] = newFit;
                             trialCounters[i] = 0;
 
-                            // Global en iyi çözümü güncelle
-                            if (newFitness < BestFitness)
+                            if (newObj < BestFitness)
                             {
                                 BestSolution = newSolution.ToArray();
-                                BestFitness = newFitness;
+                                BestFitness = newObj;
                             }
                         }
                         else
@@ -121,14 +134,14 @@ namespace ABCAlg
                     if (trialCounters[i] >= _limit)
                     {
                         solutions[i] = GenerateRandomSolution();
-                        fitnessValues[i] = _objectiveFunction(solutions[i]);
+                        objectiveValues[i] = _objectiveFunction(solutions[i]);
+                        fitnessValues[i] = Fitness(objectiveValues[i]);
                         trialCounters[i] = 0;
 
-                        // Global en iyi çözümü güncelle
-                        if (fitnessValues[i] < BestFitness)
+                        if (objectiveValues[i] < BestFitness)
                         {
                             BestSolution = solutions[i].ToArray();
-                            BestFitness = fitnessValues[i];
+                            BestFitness = objectiveValues[i];
                         }
                     }
                 }
@@ -174,23 +187,10 @@ namespace ABCAlg
 
         private double[] CalculateProbabilities(double[] fitnessValues)
         {
-            double maxFitness = fitnessValues.Max();
+            double sum = fitnessValues.Sum();
             double[] probabilities = new double[_colonySize];
-            double sum = 0;
-
             for (int i = 0; i < _colonySize; i++)
-            {
-                // Uygunluk değerini normalize et
-                probabilities[i] = 1 - (fitnessValues[i] / maxFitness);
-                sum += probabilities[i];
-            }
-
-            // Olasılıkları normalize et
-            for (int i = 0; i < _colonySize; i++)
-            {
-                probabilities[i] /= sum;
-            }
-
+                probabilities[i] = fitnessValues[i] / sum;
             return probabilities;
         }
     }
