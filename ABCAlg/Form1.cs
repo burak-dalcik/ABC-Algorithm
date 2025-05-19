@@ -13,6 +13,9 @@ namespace ABCAlg
         {
             InitializeComponent();
             buttonSolve.Click += SolveButton_Click;
+            // Test fonksiyonu seçimi kaldırıldı, ComboBox ve etiket gizleniyor
+            comboFunc.Visible = false;
+            labelFunc.Visible = false;
         }
 
         private void SolveButton_Click(object sender, EventArgs e)
@@ -36,30 +39,15 @@ namespace ABCAlg
                     upperBound[i] = 5.12;
                 }
 
-                // Test fonksiyonunu seç
-                Func<double[], double> objectiveFunction;
-                switch (comboFunc.SelectedItem.ToString())
-                {
-                    case "Sphere":
-                        objectiveFunction = TestFunctions.Sphere;
-                        break;
-                    case "Rosenbrock":
-                        objectiveFunction = TestFunctions.Rosenbrock;
-                        break;
-                    case "Rastrigin":
-                        objectiveFunction = TestFunctions.Rastrigin;
-                        break;
-                    default:
-                        objectiveFunction = TestFunctions.Sphere;
-                        break;
-                }
+                // Test fonksiyonu sabit: Sphere
+                Func<double[], double> objectiveFunction = TestFunctions.Sphere;
 
                 // ABC algoritmasını oluştur ve çalıştır
                 _abc = new ABCAlgorithm(colonySize, maxIterations, limit, dimension, lowerBound, upperBound, objectiveFunction);
                 _abc.Solve();
 
                 // Sonuçları göster
-                textResult.Text = $"Test Fonksiyonu: {comboFunc.SelectedItem}\r\n";
+                textResult.Text = "f(x) = x1^2 + x2^2\r\n-5 < x1, x2 < 5\r\n\r\n";
                 textResult.Text += $"Kolon Boyutu: {colonySize}\r\n";
                 textResult.Text += $"Maksimum İterasyon: {maxIterations}\r\n";
                 textResult.Text += $"Limit: {limit}\r\n";
